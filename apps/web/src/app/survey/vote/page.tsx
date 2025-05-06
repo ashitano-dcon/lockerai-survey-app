@@ -8,10 +8,9 @@ import { getNextVoteAnnotationId } from '@/usecases/getNextVoteAnnotationId';
 import { css } from 'styled-system/css';
 
 const Page = async (): Promise<ReactNode> => {
-  const startSurvey = async (formData: FormData) => {
+  const startSurvey = async () => {
     'use server';
-    const email = formData.get('email') as string;
-    const annotationId = await getNextVoteAnnotationId({ email });
+    const annotationId = await getNextVoteAnnotationId();
     redirect(`/survey/vote/${annotationId}`);
   };
   return (

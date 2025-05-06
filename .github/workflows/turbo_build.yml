@@ -6,6 +6,9 @@ on:
 env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  LOOPS_API_KEY: ${{ secrets.LOOPS_API_KEY }}
+  SECRET: ${{ secrets.SECRET }}
 
 jobs:
   build:
@@ -45,3 +48,7 @@ jobs:
 
       - name: Build web
         run: pnpm --filter web build
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          LOOPS_API_KEY: ${{ secrets.LOOPS_API_KEY }}
+          SECRET: ${{ secrets.SECRET }}

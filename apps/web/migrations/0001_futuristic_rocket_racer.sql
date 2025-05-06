@@ -1,0 +1,1 @@
+ALTER TYPE "public"."annotator_options" ADD VALUE 'data-augmentation';

@@ -1,4 +1,4 @@
-import { eq, and, gte } from 'drizzle-orm';
+import { eq, and, gte, not } from 'drizzle-orm';
 import { desc } from 'drizzle-orm';
 import { db } from '../db';
 import { annotationTable, voteTable, redeemTable } from '@/db/schema';
@@ -7,11 +7,11 @@ import type { Email } from '@/states/atoms/email';
 export const getSurveyProgress = async () => {
   const annotationCount = await db.$count(
     annotationTable,
-    and(eq(annotationTable.quick, false), eq(annotationTable.annotator, 'human')),
+    and(eq(annotationTable.quick, false), not(eq(annotationTable.annotator, 'ai'))),
   );
   const quickAnnotationCount = await db.$count(
     annotationTable,
-    and(eq(annotationTable.quick, true), eq(annotationTable.annotator, 'human')),
+    and(eq(annotationTable.quick, true), not(eq(annotationTable.annotator, 'ai'))),
   );
   const voteCount = await db.$count(voteTable);
   return {

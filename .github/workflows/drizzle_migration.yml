@@ -48,4 +48,3 @@ jobs:
         run: pnpm -F web db:migrate
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-

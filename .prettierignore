@@ -1,2 +1,5 @@
 # 依存関係の関連ファイル
 pnpm-lock.yaml
+
+# DBのmigrationファイル
+migrations

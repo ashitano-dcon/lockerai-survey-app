@@ -3,9 +3,10 @@ import { uuid, text, pgTable, pgEnum, varchar, timestamp, boolean, real } from '
 import { createInsertSchema } from 'drizzle-zod';
 import { z } from 'zod';
 
-export const annotatorOptionsEnum = pgEnum('annotator_options', ['human', 'ai']);
+export const annotatorOptionsEnum = pgEnum('annotator_options', ['human', 'ai', 'data-augmentation']);
 export const redeemTypeOptionsEnum = pgEnum('redeem_type_options', ['annotation', 'vote']);
 export const authorizationOptionsEnum = pgEnum('authorization_options', ['grant', 'deny']);
+export const qualityOptionsEnum = pgEnum('quality_options', ['low', 'medium', 'high']);
 
 // 遺失物の画像から説明文章を書くアノテーションの結果
 export const annotationTable = pgTable('annotation', {
@@ -22,6 +23,7 @@ export const annotationTable = pgTable('annotation', {
   inquiry: text().notNull(), // 説明文書
   duration: real(), // 説明文書を書くのにかかった時間 (単位:秒)
   quick: boolean().notNull(), // 10秒間だけ画像が表示される収集方法だったかどうか
+  quality: qualityOptionsEnum(), // 合成データの品質の設定。`annotator`が`data-augmentation`の場合にのみ使用
   createdAt: timestamp('created_at').defaultNow().notNull(), // アノテーションの登録日時
 });
 

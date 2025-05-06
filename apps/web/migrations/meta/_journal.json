@@ -8,6 +8,20 @@
       "when": 1734900347840,
       "tag": "0000_moaning_meteorite",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1745828862684,
+      "tag": "0001_futuristic_rocket_racer",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1745830602813,
+      "tag": "0002_secret_trish_tilby",
+      "breakpoints": true
     }
   ]
 }

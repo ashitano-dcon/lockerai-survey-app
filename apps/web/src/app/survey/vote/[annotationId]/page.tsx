@@ -10,6 +10,7 @@ import { VoteForm } from '@/features/navigation/components/VoteForm/VoteForm';
 import { createVote } from '@/usecases/createVote';
 import { getAiAnnotationByImageId } from '@/usecases/getAiAnnotationByImageId';
 import { getAnnotation } from '@/usecases/getAnnotation';
+import { getNextVoteAnnotationId } from '@/usecases/getNextVoteAnnotationId';
 import { css } from 'styled-system/css';
 
 type VotePageProps = {
@@ -37,7 +38,9 @@ const VotePage = async ({ params }: VotePageProps): Promise<ReactElement> => {
     const endsAt = new Date();
     const duration = (endsAt.getTime() - startsAt.getTime()) / 1000;
     await createVote({ email, annotation: annotationId, duration, authorization });
-    redirect('/');
+
+    const nextAnnotationId = await getNextVoteAnnotationId();
+    redirect(`/survey/vote/${nextAnnotationId}`);
   };
 
   return (
@@ -112,6 +115,18 @@ const VotePage = async ({ params }: VotePageProps): Promise<ReactElement> => {
           </span>
         </label>
         <Textarea id="inquiry" name="inquiry" placeholder="ここに説明文章を入力してください" value={inquiry} readOnly />
+        <p
+          aria-hidden
+          className={css({
+            alignSelf: 'end',
+            textAlign: 'right',
+            fontWeight: 'bold',
+            fontSize: 'sm',
+            color: 'keyplate.3',
+          })}
+        >
+          {annotation.annotator === 'human' ? '人間による手書きデータ' : `LLMによる合成データ (${annotation.quality})`}
+        </p>
         <label
           htmlFor="latency"
           className={css({
